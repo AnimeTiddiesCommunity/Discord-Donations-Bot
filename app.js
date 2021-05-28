@@ -8,7 +8,10 @@ transactions_link = "https://bscscan.com/address/0x6B9Ae9D732d86cC9617E371a69fb6
 donations_channel = {
     instance: null,
     id : "842757292851593226"
-};
+},
+Discord = require('discord.js'),
+discord_bot = new Discord.Client();
+
 var donations_wallet_message = null;
 
 fs.readdirSync('contracts',{withFileTypes:true}).forEach((file) => {
