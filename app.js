@@ -31,6 +31,7 @@ async function setWalletBalanceMessage(){
     let wallet_balance = await get_wallet_balance();
     if(donations_wallet_message == null){
         donations_wallet_message = await donations_channel.instance.send(wallet_balance);
+        await donations_wallet_message.pin({ reason: 'important' });
     }
     else{
         donations_wallet_message.edit(wallet_balance);
