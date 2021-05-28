@@ -23,16 +23,19 @@ discord_bot.login(process.env.DISCORD_BOT_TOKEN);
 
 discord_bot.on('ready', async () => {
     donations_channel.instance = await discord_bot.channels.fetch(donations_channel.id);
-    setInterval(async () => {
-        let wallet_balance = await get_wallet_balance();
-        if(donations_wallet_message == null){
-            donations_wallet_message = await donations_channel.instance.send(wallet_balance);
-        }
-        else{
-            donations_wallet_message.edit(wallet_balance);
-        }
-    }, process.env.UPDATE_WALLET_BALANCE_INTERVAL * 1000);
+    setWalletBalanceMessage();
+    setInterval(setWalletBalanceMessage, process.env.UPDATE_WALLET_BALANCE_INTERVAL * 1000);
 });
+
+async function setWalletBalanceMessage(){
+    let wallet_balance = await get_wallet_balance();
+    if(donations_wallet_message == null){
+        donations_wallet_message = await donations_channel.instance.send(wallet_balance);
+    }
+    else{
+        donations_wallet_message.edit(wallet_balance);
+    }
+}
 
 function get_coins(){
     return new Promise(resolve => {
